@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>2024第一届Solar杯应急响应挑战赛</title>
+    <link href="/2024/12/28/solar2024/"/>
+    <url>/2024/12/28/solar2024/</url>
+    
+    <content type="html"><![CDATA[<h1 id="2024第一届solar杯应急响应挑战赛"><a class="markdownIt-Anchor" href="#2024第一届solar杯应急响应挑战赛"></a> 2024第一届Solar杯应急响应挑战赛</h1><h2 id="内存取证"><a class="markdownIt-Anchor" href="#内存取证"></a> 内存取证</h2><h3 id="签到"><a class="markdownIt-Anchor" href="#签到"></a> 签到</h3><p>《一把梭》</p><p><img src="/imgs/solar2024/1.png" alt="1" /></p><h3 id="内存取证-2"><a class="markdownIt-Anchor" href="#内存取证-2"></a> 内存取证</h3><p>查看镜像信息，暂定镜像系统为Win7SP1x64</p><p><code>vol.exe -f SERVER-2008-20241220-162057.raw imageinfo</code></p><p><img src="/imgs/solar2024/2.png" alt="2" /></p><p>vol.exe -f SERVER-2008-20241220-162057.raw --profile=Win7SP1x64</p><h4 id="内存取证-1"><a class="markdownIt-Anchor" href="#内存取证-1"></a> 内存取证-1</h4><p>找到rdp连接的跳板地址，通过查找网络连接情况，并且过滤RDP的3389端口，发现连接的IP</p><p><code>vol.exe -f SERVER-2008-20241220-162057.raw --profile=Win7SP1x64 netscan | grep 3389</code></p><p><img src="/imgs/solar2024/3.png" alt="3" /></p><h4 id="内存取证-2"><a class="markdownIt-Anchor" href="#内存取证-2"></a> 内存取证-2</h4><p>没限制提交次数就一个个试</p><p><img src="/imgs/solar2024/6.png" alt="6" /></p><p>后面扫命令行的时候看到了</p><p><code>vol.exe -f SERVER-2008-20241220-162057.raw --profile=Win7SP1x64 cmdscan</code></p><p><img src="/imgs/solar2024/7.png" alt="7" /></p><h4 id="内存取证-3"><a class="markdownIt-Anchor" href="#内存取证-3"></a> 内存取证-3</h4><p>攻击者获取的“FusionManager节点操作系统帐户（业务帐户）”的密码是什么</p><p>通过扫描文件，并过滤桌面，发现一个pass.txt，下载下来发现就是放密码的文件</p><p><code>vol.exe -f SERVER-2008-20241220-162057.raw --profile=Win7SP1x64 filescan | grep Desktop</code></p><p><code>vol.exe -f SERVER-2008-20241220-162057.raw --profile=Win7SP1x64 dumpfiles -Q 0x000000007e4cedd0 -D ./</code></p><p><img src="/imgs/solar2024/4.png" alt="4" /></p><p><img src="/imgs/solar2024/5.png" alt="5" /></p><h4 id="内存取证-4"><a class="markdownIt-Anchor" href="#内存取证-4"></a> 内存取证-4</h4><p>直接查找所有用户名，一个个试一下</p><p><code>vol.exe -f SERVER-2008-20241220-162057.raw --profile=Win7SP1x64 printkey -K &quot;SAM\Domains\Account\Users\Names&quot;</code></p><p><img src="/imgs/solar2024/8.png" alt="8" /></p><h4 id="内存取证-6"><a class="markdownIt-Anchor" href="#内存取证-6"></a> 内存取证-6</h4><p>hashdump直接找</p><p><code>vol.exe -f SERVER-2008-20241220-162057.raw --profile=Win7SP1x64 hashdump</code></p><p><img src="/imgs/solar2024/9.png" alt="9" /></p><h2 id="日志流量"><a class="markdownIt-Anchor" href="#日志流量"></a> 日志流量</h2><h3 id="日志流量-1"><a class="markdownIt-Anchor" href="#日志流量-1"></a> 日志流量-1</h3><p>根据提示，随便翻翻，看到一串base64串很奇怪，解密之后就是flag</p><p><img src="/imgs/solar2024/10.png" alt="10" /></p><p><img src="/imgs/solar2024/11.png" alt="11" /></p><h3 id="日志流量-2"><a class="markdownIt-Anchor" href="#日志流量-2"></a> 日志流量-2</h3><p>将b.jsp进行base64加密，然后在日志流量-1图中flag下面那一串十六进制就是哥斯拉解密的密码，然后使用pz-pro解密</p><p>解密成功，说明密钥正确</p><p><img src="/imgs/solar2024/12.png" alt="12" /></p><p>导出wire.pcapng的HTTP文件，逐一解密</p><p><img src="/imgs/solar2024/16.png" alt="16" /></p><h3 id="日志流量-3"><a class="markdownIt-Anchor" href="#日志流量-3"></a> 日志流量-3</h3><p>解密这个15KB的文件</p><p><img src="/imgs/solar2024/13.png" alt="13" /></p><p>是一个PDF文件，导出一下去掉前面多余部分，打开就是flag</p><p><img src="/imgs/solar2024/14.png" alt="14" /></p><p><img src="/imgs/solar2024/15.png" alt="15" /></p><h2 id="数据库"><a class="markdownIt-Anchor" href="#数据库"></a> 数据库</h2><p>前半部分参考这篇，修改屏幕键盘为cmd.exe</p><p><a href="https://www.cnblogs.com/gates/p/7510751.html">VMware虚拟机忘记开机密码怎么办 - gate_s - 博客园</a></p><p>成功</p><p><img src="/imgs/solar2024/17.png" alt="17" /></p><p>修改密码成功</p><p><img src="/imgs/solar2024/18.png" alt="18" /></p><h3 id="数据库-1"><a class="markdownIt-Anchor" href="#数据库-1"></a> 数据库-1</h3><p>事件查看器查看安全日志，过滤4720用户事件，就是第一个日志了</p><p><img src="/imgs/solar2024/19.png" alt="19" /></p><h3 id="数据库-2"><a class="markdownIt-Anchor" href="#数据库-2"></a> 数据库-2</h3><p>通过netstat查看到有一个端口很奇怪</p><p><img src="/imgs/solar2024/20.png" alt="20" /></p><p>通过netstat -ano 查看到IP地址（数据库-3）</p><p><img src="/imgs/solar2024/21.png" alt="21" /></p><p>通过tasklist查看进程信息</p><p><img src="/imgs/solar2024/22.png" alt="22" /></p><h3 id="数据库-3"><a class="markdownIt-Anchor" href="#数据库-3"></a> 数据库-3</h3><p>见数据库-2</p><h3 id="数据库-5"><a class="markdownIt-Anchor" href="#数据库-5"></a> *数据库-5</h3><p>不是这个文件？</p><p><code>Get-ChildItem -Path C:\ -Recurse -Filter &quot;jusched.exe&quot; -ErrorAction SilentlyContinue | Select-Object FullName</code></p><p><code> Get-FileHash -Path &quot;C:\Program Files\Java\latest\jre-1.8\xmrig.exe&quot; -Algorithm MD5</code></p><h2 id="综合应急"><a class="markdownIt-Anchor" href="#综合应急"></a> 综合应急</h2><p>你告诉我理论能搜到原题？？？？？？？？</p><p>这比了个寂寞</p><h3 id="理论"><a class="markdownIt-Anchor" href="#理论"></a> 理论</h3><p>都是直接猜的</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>ctf</category>
+      
+      <category>wp</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Forensics</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>2024年度总结</title>
     <link href="/2024/12/16/2024final/"/>
     <url>/2024/12/16/2024final/</url>
