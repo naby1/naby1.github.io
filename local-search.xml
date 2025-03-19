@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>AI小项目之springboot+vue</title>
+    <link href="/2025/03/19/springbootvue/"/>
+    <url>/2025/03/19/springbootvue/</url>
+    
+    <content type="html"><![CDATA[<blockquote><p><a href="https://github.com/naby1/springboot_vue">https://github.com/naby1/springboot_vue</a></p></blockquote><p>由于客观原因，尝试0基础接触springboot+vue</p><p>在Ai的帮助下（指99%的代码，使用的是元宝的deepseek深度思考，无联网），写了两个小项目，这里记录一下。</p><h1 id="文件系统"><a class="markdownIt-Anchor" href="#文件系统"></a> 文件系统</h1><p>（由于本人技术太差，基本都是写在一个文件中，勿喷）</p><p>实现了简单的文件系统，根目录配置在java/src/main/java/org.example/controller/FileController.java第31行的BASE_PATH中<br /><img src="/imgs/springbootvue/file/1.png" alt="" /></p><p>实现功能：</p><ol><li><p>左上角显示当前目录路径，AI的说法是面包屑导航。</p></li><li><p>右上角有新建文件夹和上传功能，上传按钮左侧点击是可以直接上传文件，右侧按钮可以选择上传文件夹和上传文件。在设计时新建文件夹功能会在当前目录生成一个空文件夹，命名为“新建文件夹”，并且由于不可重名问题，无法在新建文件夹，所以算是bug吧，但我懒得改了。<br /><img src="/imgs/springbootvue/file/2.png" alt="2" /></p></li><li><p>下方本体就是显示文件的表，有名称，大小（文件才有），修改时间，都有排序功能（自带的sortable）</p></li><li><p>对于下方文件表中每一栏文件/目录，双击可以进入目录（修改当前访问路径并向后端请求所在目录文件）。右键会有菜单栏，可以进行下载、重命名和删除操作。<br /><img src="/imgs/springbootvue/file/3.png" alt="3" /></p></li></ol><h1 id="学生管理系统"><a class="markdownIt-Anchor" href="#学生管理系统"></a> 学生管理系统</h1><p>实现前端、后端和数据库的基本操作，增删改查等基础功能。<br />个人感悟：使用路由，分开设计比较方便管理。<br /><img src="/imgs/springbootvue/student/1.png" alt="1" /></p><h2 id="数据库设计"><a class="markdownIt-Anchor" href="#数据库设计"></a> 数据库设计</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs mysql">CREATE TABLE user (<br>  id INT PRIMARY KEY AUTO_INCREMENT,<br>  name VARCHAR(20) NOT NULL,<br>  passwd CHAR(32) NOT NULL,<br>  birthday DATE,<br>  sex ENUM(&#x27;M&#x27;,&#x27;F&#x27;) DEFAULT &#x27;M&#x27;,<br>  phone VARCHAR(20),<br>  email VARCHAR(50),<br>  addr VARCHAR(125),<br>  education ENUM(&#x27;PHD&#x27;,&#x27;MASTER&#x27;,&#x27;BACHELOR&#x27;,&#x27;ASSOCIATE&#x27;,&#x27;HIGHSCHOOL&#x27;,&#x27;JUNIORHS&#x27;,&#x27;JUNIORHS&#x27;,&#x27;OTHER&#x27;),<br>  create_time DATETIME DEFAULT CURRENT_TIMESTAMP,<br>  last_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP<br>);<br></code></pre></td></tr></table></figure><blockquote><p>PHD - 博士<br />MASTER - 硕士<br />BACHELOR - 本科<br />ASSOCIATE - 大专<br />HIGHSCHOOL - 高中<br />JUNIORHS - 初中<br />PRIMARY - 小学<br />OTHER - 其他</p></blockquote><p>测试数据</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs mysql">INSERT INTO user (name, passwd, birthday, sex, phone, email, addr, education) <br>VALUES (<br>  &#x27;张三&#x27;, <br>  MD5(&#x27;zhangsan&#x27;), <br>  &#x27;2000-01-01&#x27;, <br>  &#x27;M&#x27;, <br>  &#x27;13812345678&#x27;, <br>  &#x27;zhangsan@example.com&#x27;, <br>  &#x27;北京市朝阳区&#x27;, <br>  &#x27;BACHELOR&#x27;<br>);<br></code></pre></td></tr></table></figure><h2 id="查询功能"><a class="markdownIt-Anchor" href="#查询功能"></a> 查询功能</h2><p>点击后就会显示查询到的所有数据，密码在后端就进行了隐藏。默认一页显示20条数据，最下方可以选择页数和显示条数。在最上方能对四个属性进行查询，可单独查询也可组合查询。<br /><img src="/imgs/springbootvue/student/2.png" alt="2" /></p><h2 id="删除功能"><a class="markdownIt-Anchor" href="#删除功能"></a> 删除功能</h2><p>输入待删除的ID，点击查询，会先显示用户信息进行确认，然后再删除（删除一开始不可点，当然这只是前端设置）<br /><img src="/imgs/springbootvue/student/3.png" alt="3" /></p><h2 id="添加功能"><a class="markdownIt-Anchor" href="#添加功能"></a> 添加功能</h2><p>就是简单的添加数据，在后端会对添加数据进行校验（在model处）<br /><img src="/imgs/springbootvue/student/4.png" alt="4" /></p><h2 id="修改功能"><a class="markdownIt-Anchor" href="#修改功能"></a> 修改功能</h2><p>先查询后修改，ID、创建时间和修改时间不可更改，其他都可以更改，同样由于model的设置，会对数据进行校验。<br /><img src="/imgs/springbootvue/student/5.png" alt="5" /></p><h1 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h1><p>感觉AI写小功能还行，但是上下文有点差，特别是格式都很难统一，对于分文件编写有点困难。写了这两个项目感觉不能说没有收获，只能说收获很小，如果只是自己随便当小玩意用那没啥说的，但如果想要深入了解对应技术，还是不太够，对于真正的项目结构、代码规范和一些理论基础还是要靠时间和努力。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>springboot</category>
+      
+      <category>vue</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>springboot</tag>
+      
+      <tag>vue</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>HGAME2025-Crypto</title>
     <link href="/2025/02/12/hgame2025_1/"/>
     <url>/2025/02/12/hgame2025_1/</url>
@@ -333,11 +362,11 @@
     
     <tags>
       
-      <tag>Xenny的RSA题单</tag>
-      
       <tag>Crypto</tag>
       
       <tag>RSA</tag>
+      
+      <tag>Xenny的RSA题单</tag>
       
     </tags>
     
