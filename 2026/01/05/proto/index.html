@@ -19,37 +19,22 @@
   <meta name="author" content="Naby">
   <meta name="keywords" content="">
   
-    <meta name="description" content="前言  今年对我的感觉还算良好，意料之外的顺利毕业，意料之外的找了份还凑合的工作。 不打CTF之后博客也不知道写什么了，找了个前端外包（能不要找外包就不要找外包），也不知道能写什么，无时无刻都在摸鱼。 还是开始回顾一下2025年发生了什么吧  一月 从大四开始就直接回家住了，不出所料的，待在家里就免不了被家长乱批“无所事事就知道玩电脑”。 以各种理由让我去考了个驾照，这时候学生还没放假，天气也没">
+    <meta name="description" content="本文只帮助本人理解__proto__和prototype。 以下均为本人通过deepseek和网上搜索总结而出，不保证知识点的准确性，只是帮助本人理解。   类与对象 vs 对象与对象 在之前接触的语言（C++、java、python等）中，基本都是类与对象的概念 通过定义一个类作为模板，通过new来实例化一个对象，继承等操作也是在类上进行的 在js中，没有类的概念，除了原始类型外，其他都可视为">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2025年度总结">
-<meta property="og:url" content="http://example.com/2026/01/01/2025final/index.html">
+<meta property="og:title" content="理解__proto__和prototype">
+<meta property="og:url" content="http://example.com/2026/01/05/proto/index.html">
 <meta property="og:site_name" content="Naby的博客">
-<meta property="og:description" content="前言  今年对我的感觉还算良好，意料之外的顺利毕业，意料之外的找了份还凑合的工作。 不打CTF之后博客也不知道写什么了，找了个前端外包（能不要找外包就不要找外包），也不知道能写什么，无时无刻都在摸鱼。 还是开始回顾一下2025年发生了什么吧  一月 从大四开始就直接回家住了，不出所料的，待在家里就免不了被家长乱批“无所事事就知道玩电脑”。 以各种理由让我去考了个驾照，这时候学生还没放假，天气也没">
+<meta property="og:description" content="本文只帮助本人理解__proto__和prototype。 以下均为本人通过deepseek和网上搜索总结而出，不保证知识点的准确性，只是帮助本人理解。   类与对象 vs 对象与对象 在之前接触的语言（C++、java、python等）中，基本都是类与对象的概念 通过定义一个类作为模板，通过new来实例化一个对象，继承等操作也是在类上进行的 在js中，没有类的概念，除了原始类型外，其他都可视为">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/imgs/2025final/1.jpg">
-<meta property="og:image" content="http://example.com/imgs/2025final/2.jpg">
-<meta property="og:image" content="http://example.com/imgs/2025final/3.jpg">
-<meta property="og:image" content="http://example.com/imgs/2025final/4.png">
-<meta property="og:image" content="http://example.com/imgs/2025final/5.jpg">
-<meta property="og:image" content="http://example.com/imgs/2025final/6.jpg">
-<meta property="og:image" content="http://example.com/imgs/2025final/7.jpg">
-<meta property="og:image" content="http://example.com/imgs/2025final/8.jpg">
-<meta property="og:image" content="http://example.com/imgs/2025final/9.jpg">
-<meta property="og:image" content="http://example.com/imgs/2025final/10.jpg">
-<meta property="og:image" content="http://example.com/imgs/2025final/11.jpg">
-<meta property="og:image" content="http://example.com/imgs/2025final/12.png">
-<meta property="og:image" content="http://example.com/imgs/2025final/13.png">
-<meta property="og:image" content="http://example.com/imgs/2025final/14.jpg">
-<meta property="article:published_time" content="2026-01-01T13:04:56.779Z">
-<meta property="article:modified_time" content="2026-01-04T12:40:13.604Z">
+<meta property="article:published_time" content="2026-01-05T12:39:47.023Z">
+<meta property="article:modified_time" content="2026-01-05T12:40:41.362Z">
 <meta property="article:author" content="Naby">
-<meta property="article:tag" content="me">
+<meta property="article:tag" content="javascript">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/imgs/2025final/1.jpg">
   
   
   
-  <title>2025年度总结 - Naby的博客</title>
+  <title>理解__proto__和prototype - Naby的博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -244,7 +229,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="2025年度总结"></span>
+            <span id="subtitle" data-typed-text="理解__proto__和prototype"></span>
           
         </div>
 
@@ -255,8 +240,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-01-01 21:04" pubdate>
-          2026年1月1日 晚上
+        <time datetime="2026-01-05 20:39" pubdate>
+          2026年1月5日 晚上
         </time>
       </span>
     
@@ -267,7 +252,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k 字
+          704 字
         
       </span>
     
@@ -278,7 +263,7 @@
         
         
         
-          10 分钟
+          6 分钟
         
       </span>
     
@@ -324,54 +309,43 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">2025年度总结</h1>
+            <h1 id="seo-header">理解__proto__和prototype</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h1>
-<div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="/imgs/2025final/1.jpg" srcset="/img/loading.gif" lazyload alt="https://www.bilibili.com/opus/1152493094553255944" /></div><div class="group-image-wrap"><img src="/imgs/2025final/2.jpg" srcset="/img/loading.gif" lazyload alt="https://www.bilibili.com/opus/1152493094553255944" /></div></div><div class="group-image-row"></div></div>
-<p>今年对我的感觉还算良好，意料之外的顺利毕业，意料之外的找了份还凑合的工作。<br />
-不打CTF之后博客也不知道写什么了，找了个前端外包（能不要找外包就不要找外包），也不知道能写什么，无时无刻都在摸鱼。<br />
-还是开始回顾一下2025年发生了什么吧</p>
-<h1 id="一月"><a class="markdownIt-Anchor" href="#一月"></a> 一月</h1>
-<p>从大四开始就直接回家住了，不出所料的，待在家里就免不了被家长乱批“无所事事就知道玩电脑”。<br />
-以各种理由让我去考了个驾照，这时候学生还没放假，天气也没有很冷，学起来挺顺利的，一大半时间都是在预约，一个多月就考下来了<br />
-刚开始上路还挺爽的，特别是没人的时候随便开。（到现在遇到车多窄路还是会害怕，车感还没练出来）<br />
-<img src="/imgs/2025final/3.jpg" srcset="/img/loading.gif" lazyload alt="" /></p>
-<h1 id="二月"><a class="markdownIt-Anchor" href="#二月"></a> 二月</h1>
-<p>这个月没有什么事情吧，跟家人去看了个演出玩了一下，之后大部分时间都再准备三月的CISCN&amp;CCB半决赛了吧（旅游攻略）<br />
-<img src="/imgs/2025final/4.png" srcset="/img/loading.gif" lazyload alt="" /></p>
-<h1 id="三月"><a class="markdownIt-Anchor" href="#三月"></a> 三月</h1>
-<p>算是比较重要的一个月吧。<br />
-今年开始我妈就一直让我去找工作，还找熟人了解情况啥的，最后还是靠熟人找了份工作，原本聊的时候是要全栈，结果开始后只学了前端，像个打杂的一样，有活就分给我一点。不过现在感觉还行吧，早8.5晚6双休，活也不多没有什么加班虽然到手就5k，但吃住都有解决，起码不会被家长一直批斗了。</p>
-<p>还有一件事。也算是农村人进城了吧，去广州参加了CISCN&amp;CCB半决赛，原本没打算拿奖的，结果还是凑出了个报销费。<br />
-虽然中间发生了一点不愉快的事情，指跟中期答辩撞了没去，搞得导师辅导员家长轮流打电话，不过年轻人嘛，疯就对了，出都出来了还怕天塌了不成，尽兴就行了。（还是在这里跟关心我的长辈同学说一声抱歉吧）<br />
-旅游时间还是很开心的，放下内心的负担，跟同学漫步在这比厦门岛大不知道多少倍的城市中，感受大城市零零散散的事情，十块钱逛2.5h的动物园、双开门地、一站三线、排到K的出、，地铁站比商场还大，几乎什么时候坐地铁人都多，难得的舒服时光啊。</p>
-<div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="/imgs/2025final/5.jpg" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/imgs/2025final/6.jpg" srcset="/img/loading.gif" lazyload alt="" /></div><div class="group-image-wrap"><img src="/imgs/2025final/7.jpg" srcset="/img/loading.gif" lazyload alt="" /></div></div></div>
-<img src="/imgs/2025final/8.jpg" srcset="/img/loading.gif" lazyload width=30% height=300/>
-<img src="/imgs/2025final/9.jpg" srcset="/img/loading.gif" lazyload width=30% height=300/>
-<img src="/imgs/2025final/10.jpg" srcset="/img/loading.gif" lazyload width=30% height=300/>
-<h1 id="四月-六月"><a class="markdownIt-Anchor" href="#四月-六月"></a> 四月-六月</h1>
-<p>这三个月几乎都在处理毕设毕业的事情了吧。<br />
-感谢导师这几个月的指导，也是顺利毕业了，虽然中间也是发生了一些不愉快的事情，但总体来说还挺值得回味的，第一次写那么大的工程量的项目，虽然没有git、没有图形界面、大部分都靠AI，但毕竟也是自己做的工作。</p>
-<p><img src="/imgs/2025final/11.jpg" srcset="/img/loading.gif" lazyload alt="" /></p>
-<h1 id="七月-十二月"><a class="markdownIt-Anchor" href="#七月-十二月"></a> 七月-十二月</h1>
-<p>毕业之后正式签了合同，活也没有变，依旧是等上头派活，大部分时间还是无所事事，不过工作中学到的还是蛮多的(虽然我感觉最有用的还是git)。<br />
-闲着蛋疼，在工作摸鱼的时候刷leetcode，把go、js的简单题刷完了（因为可以放到vscode的假装在工作，虽然没啥人管，但也就求个心里安慰）<br />
-<img src="/imgs/2025final/12.png" srcset="/img/loading.gif" lazyload/><br />
-以及2048（靠AI写了个代码，随时摸鱼打开弄两下，能回退10次还是太无敌了）<br />
-<img src="/imgs/2025final/13.png" srcset="/img/loading.gif" lazyload/><br />
-顺便把《凡人》小说看完了（正在看仙界篇），这《凡人》动画真是看不腻啊，二刷了，还在跟着n个主播报备。<br />
-想法子摸鱼比工作都累。</p>
-<p>年底靠没剩下来多少的工资买了台电脑，顺便学了下装机。<br />
-感觉装机也不难，跟做饭一样，炒菜不难，难的是如何买菜和处理菜。（感谢4i兄提供的配置，他看到应该知道我在说什么吧）<br />
-新机确实好用，用着2k感觉就像近视好了一样，开机不用5s以前想都不敢想。<br />
-<img src="/imgs/2025final/14.jpg" srcset="/img/loading.gif" lazyload/></p>
-<h1 id="结尾"><a class="markdownIt-Anchor" href="#结尾"></a> 结尾</h1>
-<p>进入新的一年了，也是我的第二轮，到了第二次穿红内裤的时候(2026-01-05)，不知道还能有多少次呢，也不知道到下一次中间会发生什么。<br />
-时间还真是不等人啊，现在也是慢慢长大了，爸妈也不知不觉要老去了，也不知何时才能长大啊。<br />
-新的一年，最大的愿望就是能够睡好觉吧。</p>
+                <blockquote>
+<p>本文只帮助本人理解__proto__和prototype。<br />
+以下均为本人通过deepseek和网上搜索总结而出，不保证知识点的准确性，只是帮助本人理解。</p>
+</blockquote>
+<h1 id="类与对象-vs-对象与对象"><a class="markdownIt-Anchor" href="#类与对象-vs-对象与对象"></a> 类与对象 vs 对象与对象</h1>
+<p>在之前接触的语言（C++、java、python等）中，基本都是类与对象的概念<br />
+通过定义一个类作为模板，通过<code>new</code>来实例化一个对象，继承等操作也是在类上进行的</p>
+<p>在js中，没有类的概念，除了原始类型外，其他都可视为对象</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">typeof</span> &#123;&#125; <span class="hljs-comment">// &#x27;object&#x27;</span><br><span class="hljs-keyword">typeof</span> [] <span class="hljs-comment">// &#x27;object&#x27;</span><br><span class="hljs-keyword">typeof</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Number</span>() <span class="hljs-comment">// &#x27;object&#x27;</span><br><span class="hljs-keyword">typeof</span> <span class="hljs-literal">null</span> <span class="hljs-comment">// &#x27;object&#x27;(意外设计)</span><br><span class="hljs-keyword">typeof</span> <span class="hljs-literal">undefined</span> <span class="hljs-comment">// &#x27;undefinded&#x27;不是对象</span><br><br><span class="hljs-keyword">typeof</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;&#125; <span class="hljs-comment">// &#x27;function&#x27;,可调用对象</span><br><span class="hljs-title function_">typeof</span> (<span class="hljs-function">()=&gt;</span>&#123;&#125;) <span class="hljs-comment">// &#x27;function&#x27;</span><br><span class="hljs-keyword">typeof</span> <span class="hljs-keyword">class</span>&#123;&#125; <span class="hljs-comment">// &#x27;function</span><br><span class="hljs-keyword">typeof</span> <span class="hljs-title class_">Number</span> <span class="hljs-comment">// &#x27;function&#x27;</span><br></code></pre></td></tr></table></figure>
+<h1 id="js中的对象"><a class="markdownIt-Anchor" href="#js中的对象"></a> js中的对象</h1>
+<p>js中想要创建一个对象，只能通过另一个对象来创建，这<code>另一个对象</code>通常为构造函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Person</span>(<span class="hljs-params"></span>)&#123;&#125;<br><br><span class="hljs-keyword">typeof</span> <span class="hljs-title class_">Person</span> <span class="hljs-comment">// &#x27;function&#x27;</span><br><span class="hljs-keyword">typeof</span> <span class="hljs-title class_">Number</span> <span class="hljs-comment">// &#x27;function&#x27;</span><br><span class="hljs-keyword">typeof</span> <span class="hljs-title class_">Array</span> <span class="hljs-comment">// &#x27;function&#x27;</span><br><br>a=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Number</span>()<br>b=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Array</span>()<br>c=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>()<br></code></pre></td></tr></table></figure>
+<p>js里的对象可以视作一些属性(字段)的集合<br />
+任何对象都可以拥有属于自己的任意属性<br />
+通过构造函数创建的对象独自拥有构造函数中的属性</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Person</span>(<span class="hljs-params">name</span>)&#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span>=name<br>&#125;<br>a=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;张三&quot;</span>)<br>b=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>(<span class="hljs-string">&quot;李四&quot;</span>)<br><br>a.<span class="hljs-property">name</span> <span class="hljs-comment">// &quot;张三&quot; 构造函数中的属性</span><br>b.<span class="hljs-property">name</span> <span class="hljs-comment">// &quot;李四&quot;</span><br><br>a.<span class="hljs-property">age</span>=<span class="hljs-number">18</span> <span class="hljs-comment">// a自己的属性</span><br>b.<span class="hljs-property">age</span> <span class="hljs-comment">// undefinded</span><br></code></pre></td></tr></table></figure>
+<h2 id="原型"><a class="markdownIt-Anchor" href="#原型"></a> 原型</h2>
+<blockquote>
+<p>我对原型现在还不是很了解，只当“黑盒”来用</p>
+</blockquote>
+<p>如上所说，js中的对象需要由<code>另一个对象</code>创建，而这<code>另一个对象</code>就被称为该对象的原型。<br />
+而每个对象都有一个<code>__proto__</code>属性，该属性就指向此对象的原型。</p>
+<p>既然原型也是一个对象，那么就有原型的原型，一直往上，直到最顶层为<code>null</code>(可能这就是为什么<code>null</code>的类型为<code>object</code>了吧)，这就是原型链。类似于其他语言的类中的继承，js中的对象也有继承，依次继承原型中的属性。</p>
+<h2 id="__proto__和prototype"><a class="markdownIt-Anchor" href="#__proto__和prototype"></a> __proto__和prototype</h2>
+<p>原型并不是这个<code>另一个对象</code>(原构造函数)，而是独立出来的一个对象，称为原型对象，存储着共享属性，可被继承<br />
+实例对象通过<code>__proto__</code>访问原型<br />
+构造函数通过<code>prototype</code>访问原型</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Person</span>(<span class="hljs-params"></span>)&#123;&#125;<br>p1=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>()<br>p1.<span class="hljs-property">name</span>=<span class="hljs-string">&quot;张三&quot;</span> <span class="hljs-comment">// p1独有属性</span><br>p1.<span class="hljs-property">__proto__</span>.<span class="hljs-property">age</span>=<span class="hljs-number">18</span> <span class="hljs-comment">//原型对象属性</span><br><br>p2=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>()<br>p2.<span class="hljs-property">name</span> <span class="hljs-comment">// undefinded</span><br>p2.<span class="hljs-property">age</span> <span class="hljs-comment">// 18, 通过原型链继承而来</span><br><br><span class="hljs-title class_">Person</span>.<span class="hljs-property">age</span> <span class="hljs-comment">// undefinded, 构造函数中没有age属性</span><br><span class="hljs-title class_">Person</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">age</span> <span class="hljs-comment">//18</span><br><br>p1.<span class="hljs-title function_">hasOwnProperty</span>(<span class="hljs-string">&#x27;age&#x27;</span>) <span class="hljs-comment">// false，</span><br>p2.<span class="hljs-title function_">hasOwnProperty</span>(<span class="hljs-string">&#x27;age&#x27;</span>) <span class="hljs-comment">// false</span><br><span class="hljs-title class_">Person</span>.<span class="hljs-title function_">hasOwnProperty</span>(<span class="hljs-string">&#x27;age&#x27;</span>) <span class="hljs-comment">// false</span><br><br>p1.<span class="hljs-property">__proto__</span>.<span class="hljs-title function_">hasOwnProperty</span>(<span class="hljs-string">&#x27;age&#x27;</span>) <span class="hljs-comment">// true，原型对象拥有age属性</span><br>p2.<span class="hljs-property">__proto__</span>.<span class="hljs-title function_">hasOwnProperty</span>(<span class="hljs-string">&#x27;age&#x27;</span>) <span class="hljs-comment">// true</span><br><span class="hljs-title class_">Person</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-title function_">hasOwnProperty</span>(<span class="hljs-string">&#x27;age&#x27;</span>) <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>参考资料：<br />
+<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000042725370">https://segmentfault.com/a/1190000042725370</a></p>
+</blockquote>
 
                 
               </div>
@@ -390,7 +364,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/me/" class="category-chain-item">me</a>
+  <a href="/categories/javascript/" class="category-chain-item">javascript</a>
   
   
 
@@ -405,7 +379,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/me/" class="print-no-link">#me</a>
+        <a href="/tags/javascript/" class="print-no-link">#javascript</a>
       
     </div>
   
@@ -417,8 +391,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>2025年度总结</div>
-      <div>http://example.com/2026/01/01/2025final/</div>
+      <div>理解__proto__和prototype</div>
+      <div>http://example.com/2026/01/05/proto/</div>
     </div>
     <div class="license-meta">
       
@@ -430,7 +404,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026年1月1日</div>
+          <div>2026年1月5日</div>
         </div>
       
       
@@ -462,18 +436,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/01/05/proto/" title="理解__proto__和prototype">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">理解__proto__和prototype</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/12/20/XennyRSA/" title="Xenny的RSA题单">
-                        <span class="hidden-mobile">Xenny的RSA题单</span>
+                      <a href="/2026/01/01/2025final/" title="2025年度总结">
+                        <span class="hidden-mobile">2025年度总结</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
